@@ -3,25 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài học tiếng Anh</title>
+    <title>Học và Chơi Từ vựng Tiếng Anh</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
             margin: 0;
             padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            background-color: #f0f0f0;
         }
         .tab {
-            display: none;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
         }
-        .tab.active {
-            display: block;
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #ccc;
+        }
+        .tabcontent {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-top: none;
         }
         table {
-            border-collapse: collapse;
             width: 100%;
+            border-collapse: collapse;
         }
         th, td {
             border: 1px solid #ddd;
@@ -29,226 +48,236 @@
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
         }
-        .matching-game {
+        .game-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
+            max-width: 800px;
+            margin: 0 auto;
         }
-        .word-card {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 5px;
+        .item {
+            width: 150px;
+            height: 80px;
+            margin: 10px;
+            background-color: #3498db;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: white;
             cursor: pointer;
-            flex-basis: calc(20% - 10px);
+            transition: transform 0.3s ease;
             text-align: center;
-            transition: background-color 0.3s;
+            padding: 5px;
+        }
+        .item:hover {
+            transform: scale(1.05);
         }
         .selected {
-            background-color: #f0f0f0;
+            background-color: #e74c3c;
         }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            table {
+        .matched {
+            background-color: #2ecc71;
+        }
+        #score {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #completeBtn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        @media (max-width: 800px) {
+            .item {
+                width: 120px;
+                height: 70px;
                 font-size: 14px;
-            }
-            .word-card {
-                flex-basis: calc(33.33% - 10px);
-            }
-        }
-
-        @media (max-width: 480px) {
-            table {
-                font-size: 12px;
-            }
-            th, td {
-                padding: 5px;
-            }
-            .word-card {
-                flex-basis: calc(50% - 10px);
-            }
-            button {
-                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div id="tab1" class="tab active">
-        <h2>Bài dịch tiếng Việt</h2>
-        <p>
-            Harris và Walz ra mắt liên danh Nhà Trắng, thề "đấu tranh cho tương lai"
-
-            Ngay sau khi được công bố trong liên danh Đảng Dân chủ, Thống đốc Minnesota Tim Walz đã lên sân khấu cùng Phó Tổng thống Kamala Harris tại bang chiến địa quan trọng Pennsylvania.
-
-            Kamala Harris đã ra mắt vào thứ Ba (ngày 6/8) cùng với người đồng hành tranh cử Nhà Trắng mới là Thống đốc Tim Walz, người đã đưa ra lời chỉ trích gay gắt đối thủ Đảng Cộng hòa Donald Trump, đặt câu hỏi về sự cam kết của ông với đất nước và chỉ trích kỷ lục của ông khi tại vị.
-
-            Vài giờ sau khi được công bố trong liên danh Đảng Dân chủ, thống đốc Minnesota đã lên sân khấu cùng Phó Tổng thống Harris tại bang chiến địa quan trọng Pennsylvania, và báo hiệu ý định của ông trong việc tích cực lên án Trump.
-
-            "Donald Trump - ông ta nhìn thế giới khác biệt. Ông ta không biết gì về phục vụ vì quá bận phục vụ bản thân," Walz nói với đám đông khoảng 10.000 người ủng hộ đang hò reo nhiệt liệt ở Philadelphia.
-
-            Ông buộc tội Trump cố tình làm suy yếu nền kinh tế vì mục đích riêng, chế giễu luật pháp và trật tự, và gieo rắc "hỗn loạn và chia rẽ".
-        </p>
-        <button onclick="showTab(2)">Hoàn thành</button>
+    <div class="tab">
+        <button class="tablinks active" onclick="openTab(event, 'Learn')">Học</button>
+        <button class="tablinks" onclick="openTab(event, 'Play')">Chơi</button>
     </div>
 
-    <div id="tab2" class="tab">
-        <h2>Bảng từ vựng</h2>
-        <div style="overflow-x: auto;">
-            <table>
-                <tr>
-                    <th>Từ vựng (phiên âm)</th>
-                    <th>Dịch nghĩa</th>
-                    <th>Ví dụ</th>
-                </tr>
-                <tr>
-                    <td>debut (deɪˈbjuː)</td>
-                    <td>Ra mắt, xuất hiện lần đầu</td>
-                    <td>She made her debut as a concert pianist last night.<br>Cô ấy đã có buổi ra mắt với tư cách là nghệ sĩ piano biểu diễn đêm qua.</td>
-                </tr>
-                <tr>
-                    <td>rebuke (rɪˈbjuːk)</td>
-                    <td>Quở trách, chỉ trích</td>
-                    <td>The teacher rebuked the student for cheating on the test.<br>Giáo viên đã quở trách học sinh vì gian lận trong bài kiểm tra.</td>
-                </tr>
-                <tr>
-                    <td>crucial (ˈkruːʃəl)</td>
-                    <td>Quan trọng, then chốt</td>
-                    <td>Exercise is crucial for maintaining good health.<br>Tập thể dục rất quan trọng để duy trì sức khỏe tốt.</td>
-                </tr>
-                <tr>
-                    <td>skewer (ˈskjuːər)</td>
-                    <td>Chỉ trích gay gắt, đâm thủng</td>
-                    <td>The critic skewered the new movie in his review.<br>Nhà phê bình đã chỉ trích gay gắt bộ phim mới trong bài đánh giá của mình.</td>
-                </tr>
-                <tr>
-                    <td>obliterate (əˈblɪtəreɪt)</td>
-                    <td>Xóa sạch, hủy diệt hoàn toàn</td>
-                    <td>The new evidence obliterated any doubt about his innocence.<br>Bằng chứng mới đã xóa sạch mọi nghi ngờ về sự vô tội của anh ta.</td>
-                </tr>
-                <tr>
-                    <td>vow (vaʊ)</td>
-                    <td>Thề, hứa</td>
-                    <td>The couple vowed to love each other forever.<br>Cặp đôi thề sẽ yêu nhau mãi mãi.</td>
-                </tr>
-                <tr>
-                    <td>unleash (ʌnˈliːʃ)</td>
-                    <td>Giải phóng, thả lỏng</td>
-                    <td>The new policy unleashed a wave of economic growth.<br>Chính sách mới đã giải phóng một làn sóng tăng trưởng kinh tế.</td>
-                </tr>
-                <tr>
-                    <td>stinging (ˈstɪŋɪŋ)</td>
-                    <td>Cay độc, đau đớn</td>
-                    <td>His stinging remarks hurt her feelings deeply.<br>Những nhận xét cay độc của anh ta đã làm tổn thương sâu sắc cảm xúc của cô ấy.</td>
-                </tr>
-                <tr>
-                    <td>campaign (kæmˈpeɪn)</td>
-                    <td>Chiến dịch, vận động</td>
-                    <td>The politician launched his campaign for re-election.<br>Chính trị gia đã phát động chiến dịch tái tranh cử của mình.</td>
-                </tr>
-                <tr>
-                    <td>rollout (ˈrəʊlaʊt)</td>
-                    <td>Sự ra mắt, triển khai</td>
-                    <td>The company planned a gradual rollout of the new product.<br>Công ty đã lên kế hoạch triển khai dần dần sản phẩm mới.</td>
-                </tr>
-            </table>
-        </div>
-        <button onclick="showTab(3)">Hoàn thành</button>
+    <div id="Learn" class="tabcontent" style="display: block;">
+        <h2>Bảng Từ vựng</h2>
+        <table>
+            <tr>
+                <th>Từ vựng (Phiên âm)</th>
+                <th>Dịch nghĩa</th>
+                <th>Ví dụ và dịch nghĩa</th>
+            </tr>
+            <tr>
+                <td>Bureaucratic (/ˌbjʊərəˈkrætɪk/)</td>
+                <td>Quan liêu</td>
+                <td>"Bureaucratic hurdles and complex administrative procedures can pose difficulties when setting up a business in this region."<br><br>Dịch: "Các rào cản quan liêu và thủ tục hành chính phức tạp có thể gây khó khăn khi thành lập doanh nghiệp ở khu vực này."</td>
+            </tr>
+            <tr>
+                <td>Advantageous (/ˌædvənˈteɪdʒəs/)</td>
+                <td>Thuận lợi, có lợi</td>
+                <td>"An advantageous location"<br><br>Dịch: "Một vị trí thuận lợi"</td>
+            </tr>
+            <tr>
+                <td>Saturation (/ˌsætʃəˈreɪʃn/)</td>
+                <td>Sự bão hòa</td>
+                <td>"It's cost competitive but reaching saturation point due to lack of new industrial parks"<br><br>Dịch: "Nó có tính cạnh tranh về chi phí nhưng đang đạt đến điểm bão hòa do thiếu các khu công nghiệp mới"</td>
+            </tr>
+            <tr>
+                <td>Burdensome (/ˈbɜːdnsəm/)</td>
+                <td>Nặng nề, phiền phức</td>
+                <td>"Burdensome, unnecessary regulations and rules"<br><br>Dịch: "Quy định và luật lệ phiền phức, không cần thiết"</td>
+            </tr>
+            <tr>
+                <td>Provenance (/ˈprɒvənəns/)</td>
+                <td>Nguồn gốc</td>
+                <td>"In order for a company to get a VAT refund, they must prove the provenance of the wood."<br><br>Dịch: "Để được hoàn thuế VAT, công ty phải chứng minh nguồn gốc của gỗ."</td>
+            </tr>
+            <tr>
+                <td>Streamline (/ˈstriːmlaɪn/)</td>
+                <td>Hợp lý hóa, đơn giản hóa</td>
+                <td>"To streamline the fulfillment of their tax obligations, businesses should ensure their books are kept up to date"<br><br>Dịch: "Để đơn giản hóa việc thực hiện nghĩa vụ thuế của mình, các doanh nghiệp nên đảm bảo sổ sách của họ được cập nhật"</td>
+            </tr>
+            <tr>
+                <td>Semiconductor (/ˌsemikənˈdʌktə(r)/)</td>
+                <td>Chất bán dẫn</td>
+                <td>"The semiconductor company Amkor Technology Inc. will soon receive certificates to increase its investment in Bac Ninh"<br><br>Dịch: "Công ty bán dẫn Amkor Technology Inc. sẽ sớm nhận được giấy chứng nhận tăng vốn đầu tư tại Bắc Ninh"</td>
+            </tr>
+            <tr>
+                <td>Surmount (/səˈmaʊnt/)</td>
+                <td>Vượt qua, khắc phục</td>
+                <td>"Firms need to surmount various challenges when investing in northern Vietnam."<br><br>Dịch: "Các công ty cần vượt qua nhiều thách thức khi đầu tư vào miền Bắc Việt Nam."</td>
+            </tr>
+            <tr>
+                <td>Diversified (/daɪˈvɜːsɪfaɪd/)</td>
+                <td>Đa dạng hóa</td>
+                <td>"These firms often employ diversified supply chains, which can be easily integrated with the northern parts of Vietnam."<br><br>Dịch: "Những công ty này thường sử dụng chuỗi cung ứng đa dạng, có thể dễ dàng tích hợp với các khu vực phía Bắc của Việt Nam."</td>
+            </tr>
+            <tr>
+                <td>Compute (/kəmˈpjuːt/)</td>
+                <td>Tính toán</td>
+                <td>"There are barriers that investors should consider before entering the market and compute into their operating costs."<br><br>Dịch: "Có những rào cản mà các nhà đầu tư nên cân nhắc trước khi tham gia thị trường và tính toán vào chi phí hoạt động của họ."</td>
+            </tr>
+        </table>
+        <button id="completeBtn" onclick="switchToPlay()">Hoàn thành học tập</button>
     </div>
 
-    <div id="tab3" class="tab">
-        <h2>Trò chơi ghép nối từ vựng</h2>
-        <div id="matching-game" class="matching-game"></div>
-        <button onclick="checkMatches()">Kiểm tra</button>
+    <div id="Play" class="tabcontent">
+        <h2>Trò chơi Ghép nối Từ vựng</h2>
+        <div id="score">Điểm: 0</div>
+        <div class="game-container" id="gameContainer"></div>
     </div>
 
     <script>
-        let currentTab = 1;
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        function switchToPlay() {
+            openTab(event, 'Play');
+            document.querySelector('.tablinks:nth-child(2)').classList.add('active');
+            document.querySelector('.tablinks:nth-child(1)').classList.remove('active');
+        }
+
         const words = [
-            {word: "debut", meaning: "Ra mắt"},
-            {word: "rebuke", meaning: "Quở trách"},
-            {word: "crucial", meaning: "Quan trọng"},
-            {word: "skewer", meaning: "Chỉ trích gay gắt"},
-            {word: "obliterate", meaning: "Xóa sạch"}
+            {en: "Bureaucratic", vi: "Quan liêu"},
+            {en: "Advantageous", vi: "Thuận lợi"},
+            {en: "Saturation", vi: "Sự bão hòa"},
+            {en: "Burdensome", vi: "Phiền phức"},
+            {en: "Provenance", vi: "Nguồn gốc"},
+            {en: "Streamline", vi: "Hợp lý hóa"},
+            {en: "Semiconductor", vi: "Chất bán dẫn"},
+            {en: "Surmount", vi: "Vượt qua"},
+            {en: "Diversified", vi: "Đa dạng hóa"},
+            {en: "Compute", vi: "Tính toán"}
         ];
-        let selectedCards = [];
 
-        function showTab(tabNumber) {
-            document.getElementById(`tab${currentTab}`).classList.remove('active');
-            document.getElementById(`tab${tabNumber}`).classList.add('active');
-            currentTab = tabNumber;
+        const gameContainer = document.getElementById('gameContainer');
+        const scoreDisplay = document.getElementById('score');
+        let selectedItems = [];
+        let matchedPairs = 0;
+        let score = 0;
 
-            if (tabNumber === 3) {
-                initializeMatchingGame();
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
         }
 
-        function initializeMatchingGame() {
-            const gameContainer = document.getElementById('matching-game');
-            gameContainer.innerHTML = '';
-            const shuffledWords = [...words, ...words].sort(() => Math.random() - 0.5);
-
-            shuffledWords.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'word-card';
-                card.textContent = item.word || item.meaning;
-                card.dataset.index = index;
-                card.onclick = () => selectCard(card);
-                gameContainer.appendChild(card);
+        function createGameItems() {
+            const allItems = [...words.map(w => ({text: w.en, type: 'en'})), ...words.map(w => ({text: w.vi, type: 'vi'}))];
+            shuffleArray(allItems);
+            allItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.textContent = item.text;
+                div.dataset.type = item.type;
+                div.addEventListener('click', selectItem);
+                gameContainer.appendChild(div);
             });
         }
 
-        function selectCard(card) {
-            if (selectedCards.length < 2 && !card.classList.contains('selected')) {
-                card.classList.add('selected');
-                selectedCards.push(card);
-
-                if (selectedCards.length === 2) {
+        function selectItem() {
+            if (this.classList.contains('matched')) return;
+            if (selectedItems.length < 2 && !selectedItems.includes(this)) {
+                this.classList.add('selected');
+                selectedItems.push(this);
+                if (selectedItems.length === 2) {
                     setTimeout(checkMatch, 500);
                 }
             }
         }
 
         function checkMatch() {
-            const [card1, card2] = selectedCards;
-            const index1 = parseInt(card1.dataset.index);
-            const index2 = parseInt(card2.dataset.index);
-
-            if (
-                (words[index1 % 5].word === card1.textContent && words[index1 % 5].meaning === card2.textContent) ||
-                (words[index2 % 5].word === card2.textContent && words[index2 % 5].meaning === card1.textContent)
-            ) {
-                card1.style.visibility = 'hidden';
-                card2.style.visibility = 'hidden';
+            const [item1, item2] = selectedItems;
+            if (item1.dataset.type !== item2.dataset.type) {
+                const word1 = words.find(w => w.en === item1.textContent || w.vi === item1.textContent);
+                const word2 = words.find(w => w.en === item2.textContent || w.vi === item2.textContent);
+                if (word1 === word2) {
+                    item1.classList.add('matched');
+                    item2.classList.add('matched');
+                    matchedPairs++;
+                    score += 10;
+                } else {
+                    score = Math.max(0, score - 1);
+                }
             } else {
-                card1.classList.remove('selected');
-                card2.classList.remove('selected');
+                score = Math.max(0, score - 1);
             }
-
-            selectedCards = [];
-        }
-
-        function checkMatches() {
-            const visibleCards = document.querySelectorAll('.word-card:not([style*="visibility: hidden"])');
-            if (visibleCards.length === 0) {
-                alert('Chúc mừng! Bạn đã hoàn thành trò chơi.');
-            } else {
-                alert('Vẫn còn một số cặp chưa được ghép. Hãy tiếp tục!');
+            scoreDisplay.textContent = `Điểm: ${score}`;
+            selectedItems.forEach(item => item.classList.remove('selected'));
+            selectedItems = [];
+            if (matchedPairs === words.length) {
+                alert(`Chúc mừng! Bạn đã hoàn thành trò chơi với ${score} điểm.`);
             }
         }
+
+        createGameItems();
     </script>
 </body>
 </html>
